@@ -1,7 +1,8 @@
 // .eleventy.js
 module.exports = function(eleventyConfig) {
-  // Pass through your CSS folder directly to the output
+  // Pass through static assets
   eleventyConfig.addPassthroughCopy("src/css");
+  eleventyConfig.addPassthroughCopy("src/images");
 
   return {
     dir: {
