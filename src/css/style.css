@@ -85,9 +85,9 @@
 
     /* ── Tier 3: Component tokens ────────────────────────────────── */
 
-    --cta-bg: var(--color-brand);
+    --cta-bg: var(--color-blue-50);
     --cta-text: oklch(98% 0 0);
-    --cta-hover-bg: color-mix(in oklch, var(--color-brand), oklch(0% 0 0) 15%);
+    --cta-hover-bg: color-mix(in oklch, var(--color-blue-50), oklch(100% 0 0) 12%);
     --header-bg: var(--color-surface);
     --header-border: var(--color-border-subtle);
     --link-color: var(--color-brand);
@@ -532,29 +532,37 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-7);
-    align-items: start;
-  }
-
-  @media (inline-size > 700px) {
-    .about-layout {
-      grid-template-columns: 280px 1fr;
+    justify-items: center;
+    p {
+      margin: 0;
     }
   }
 
-  .about-layout__image img {
-    border-radius: var(--radius-lg);
+  @media (width > 700px) {
+    .about-layout {
+      display: block;
+      img {
+        float: left;
+        margin-inline-end: var(--space-6);
+        margin-block-end: var(--space-6);
+      }
+      p + p {
+        margin-block-start: var(--space-6);
+      }
+    }
+  }
+
+  .about-layout img {
+    border-radius: var(--radius-md);
+
     box-shadow: var(--shadow-md);
-    inline-size: 100%;
+    max-width: 45ch;
   }
 
   .about-layout__bio {
     font-size: 1.0625rem;
     line-height: 1.7;
     color: var(--color-text);
-  }
-
-  .about-layout__bio p + p {
-    margin-block-start: var(--space-5);
   }
 
   /* ── Page header ───────────────────────────────────────────────── */
