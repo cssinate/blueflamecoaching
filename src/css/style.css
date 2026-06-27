@@ -42,7 +42,7 @@
 
     /* Typography */
     --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --font-heading: Georgia, "Times New Roman", system-ui, serif;
+    --font-heading: "Noto Serif Display", Georgia, "Times New Roman", serif;
     --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
 
     /* Spacing scale */
@@ -85,7 +85,6 @@
 
     /* ── Tier 3: Component tokens ────────────────────────────────── */
 
-    --testimonial-accent: var(--color-brand);
     --cta-bg: var(--color-brand);
     --cta-text: oklch(98% 0 0);
     --cta-hover-bg: color-mix(in oklch, var(--color-brand), oklch(0% 0 0) 15%);
@@ -129,10 +128,12 @@
   /* ── Headings ──────────────────────────────────────────────────── */
   h1, h2, h3, h4 {
     font-family: var(--font-heading);
-    font-weight: 400;
+    font-weight: 700;
+    font-optical-sizing: auto;
     line-height: 1.25;
     text-wrap: balance;
     margin-block: 0 0.5em;
+    font-variation-settings: "wdth" 50;
   }
 
   h1 { font-size: clamp(1.75rem, 1rem + 3vw, 3rem); }
@@ -321,25 +322,25 @@
 
   /* ── Hero section ──────────────────────────────────────────────── */
   .hero {
-    background:
+    background-color: var(--color-blue-50);
+    background-image:
+      /* url("/images/hero_bg.svg"), */
       linear-gradient(
-        light-dark(
-          oklch(98% 0 0 / 0.92),
-          oklch(10% 0 0 / 0.93)
-        ),
-        light-dark(
-          oklch(98% 0 0 / 0.92),
-          oklch(10% 0 0 / 0.93)
-        )
-      ),
-      url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600&q=80")
-        center / cover no-repeat;
+        to bottom right,
+        oklch(from var(--color-blue-50) calc(l + .1) calc(c + .04) calc(h - 40)),
+        var(--color-blue-50)
+      );
+    background-position:
+      /* bottom, */
+      0 0;
+    background-size:
+      /* 120% 100%, */
+      100% 100%;
+    background-repeat: no-repeat;
+    color: oklch(95% 0 0);
     padding-block: var(--space-10) var(--space-9);
     padding-inline: var(--space-5);
     border-block-end: 1px solid var(--color-border-subtle);
-    animation: parallax linear both;
-    animation-timeline: view();
-    animation-range: entry -200% exit 200%;
   }
 
   .hero__inner {
@@ -354,9 +355,8 @@
 
   .hero__headline {
     font-size: clamp(1.75rem, 1.25rem + 3.5vw, 3rem);
-    font-weight: 400;
     line-height: 1.2;
-    color: var(--color-brand-dark);
+    color: oklch(95% 0 0);
     text-wrap: balance;
     margin: 0;
   }
@@ -364,29 +364,7 @@
   .hero__headline em,
   .hero__headline i {
     font-style: italic;
-    color: var(--color-brand);
-  }
-
-  .hl-word {
-    display: inline-block;
-    background: linear-gradient(to right, var(--color-accent-light), var(--color-accent-light)) no-repeat;
-    background-size: 0% 100%;
-    animation: word-highlight linear both;
-    animation-timeline: scroll(root);
-  }
-
-  .hl-word:nth-child(1) { animation-range: 0px 80px; }
-  .hl-word:nth-child(2) { animation-range: 0px 140px; }
-  .hl-word:nth-child(3) { animation-range: 0px 200px; }
-  .hl-word:nth-child(4) { animation-range: 0px 260px; }
-  .hl-word:nth-child(5) { animation-range: 0px 320px; }
-  .hl-word:nth-child(6) { animation-range: 0px 380px; }
-  .hl-word:nth-child(7) { animation-range: 0px 440px; }
-  .hl-word:nth-child(8) { animation-range: 0px 500px; }
-  .hl-word:nth-child(9) { animation-range: 0px 560px; }
-
-  @keyframes word-highlight {
-    to { background-size: 100% 100%; }
+    color: var(--color-accent);
   }
 
   .hero__bio {
@@ -416,14 +394,13 @@
   .hero__name {
     font-size: 1.125rem;
     font-weight: 500;
-    color: var(--color-text);
+    color: oklch(90% 0 0);
     margin: 0;
   }
 
   /* ── Section headings ──────────────────────────────────────────── */
   .section-heading {
     font-size: clamp(1.375rem, 1rem + 2vw, 2rem);
-    font-weight: 400;
     color: var(--color-text);
     text-wrap: balance;
     margin-block-end: var(--space-5);
@@ -506,28 +483,18 @@
 
   /* ── Testimonials ──────────────────────────────────────────────── */
   .testimonials-section {
-    background:
-      linear-gradient(
-        light-dark(
-          oklch(98% 0 0 / 0.88),
-          oklch(10% 0 0 / 0.9)
-        ),
-        light-dark(
-          oklch(98% 0 0 / 0.88),
-          oklch(10% 0 0 / 0.9)
-        )
-      ),
-      url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600&q=80")
-        50% 0 / cover no-repeat;
+    background-color: var(--color-blue-50);
+    background-image: linear-gradient(
+        to bottom right,
+        oklch(from var(--color-blue-50) calc(l + .1) calc(c + .04) calc(h - 40)),
+        var(--color-blue-50)
+      );
+    color: oklch(95% 0 0);
     padding-block: var(--space-8);
-    animation: parallax linear both;
-    animation-timeline: view();
-    animation-range: entry -200% exit 200%;
   }
 
-  @keyframes parallax {
-    from { background-position: 50% 0%; }
-    to   { background-position: 50% 50%; }
+  .testimonials-section .section-heading {
+    color: oklch(95% 0 0);
   }
 
   .testimonials {
@@ -537,7 +504,7 @@
   }
 
   .testimonial {
-    border-inline-start: 2px solid var(--testimonial-accent);
+    border-inline-start: 6px solid var(--color-accent);
     border-radius: 0 var(--radius-md) var(--radius-md) 0;
     padding: var(--space-5) var(--space-6);
   }
@@ -546,7 +513,7 @@
     font-size: 1.125rem;
     font-style: italic;
     line-height: 1.6;
-    color: var(--color-text);
+    color: oklch(90% 0 0);
     margin: 0;
   }
 
@@ -615,6 +582,10 @@
     padding: var(--space-1) 0;
     border-radius: 0;
     border: none;
+  }
+
+  .hero .credential-badge {
+    color: oklch(80% 0 0);
   }
 
   /* ── Inline icon link ──────────────────────────────────────────── */
