@@ -246,17 +246,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-4);
+    gap: var(--space-3) var(--space-6);
     flex-wrap: wrap;
+    container: site-header / inline-size;
   }
 
   .site-header__brand {
     font-family: var(--font-heading);
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: var(--color-brand);
+    color: var(--color-text);
     text-decoration: none;
     letter-spacing: -0.01em;
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+
+    img {
+      block-size: 3rem;
+    }
+
+    @container (width > 80vw) {
+      margin-inline: auto;
+    }
   }
 
   .site-header__brand:hover {
@@ -264,6 +276,16 @@
   }
 
   .site-nav {
+    flex-grow: 1; 
+    display: flex;
+    justify-content: end;
+
+    @container (width > 80vw) {
+      justify-content: center;
+    }
+  }
+
+  .site-nav ul {
     display: flex;
     align-items: center;
     gap: var(--space-1);
@@ -292,7 +314,7 @@
   }
 
   .site-nav a[aria-current="page"] {
-    color: var(--color-brand);
+    color: var(--color-text);
     background: var(--color-brand-light);
   }
 
@@ -338,7 +360,7 @@
       100% 100%;
     background-repeat: no-repeat;
     color: oklch(95% 0 0);
-    padding-block: var(--space-10) var(--space-9);
+    padding-block: var(--space-6);
     padding-inline: var(--space-5);
     border-block-end: 1px solid var(--color-border-subtle);
   }
@@ -354,7 +376,7 @@
   }
 
   .hero__headline {
-    font-size: clamp(1.75rem, 1.25rem + 3.5vw, 3rem);
+    font-size: clamp(1.25rem, 1.25rem + 3.5vw, 2rem);
     line-height: 1.2;
     color: oklch(95% 0 0);
     text-wrap: balance;
@@ -418,26 +440,31 @@
 
   /* ── Results list ──────────────────────────────────────────────── */
   .results-list {
-    list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+    text-wrap: balance;
+    margin-inline-start: var(--space-6);
+    list-style-position: outside;
   }
 
   .results-list li {
     font-size: 1.0625rem;
     line-height: 1.6;
     color: var(--color-text);
-  }
 
+    &::marker {
+      color: var(--color-accent);
+      font-size: 1.25rem;
+    }
+  }
+/* 
   .results-list li::before {
     content: "•";
-    color: var(--color-accent);
-    font-size: 1.25rem;
     margin-inline-end: var(--space-3);
-  }
+  } */
 
   /* ── CTA section ───────────────────────────────────────────────── */
   .cta-section {
@@ -519,6 +546,16 @@
 
   .testimonial__text::before {
     content: "\201C";
+    font-size: 1.75rem;
+    line-height: 0;
+    vertical-align: -0.3em;
+    color: var(--color-accent);
+    font-style: normal;
+    font-family: var(--font-heading);
+  }
+  
+  .testimonial__text::after {
+    content: "\201D";
     font-size: 1.75rem;
     line-height: 0;
     vertical-align: -0.3em;
