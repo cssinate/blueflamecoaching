@@ -44,6 +44,7 @@
     --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --font-heading: "Noto Serif Display", Georgia, "Times New Roman", serif;
     --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
+    --font-hero: "Cormorant Infant", serif;
 
     /* Spacing scale */
     --space-1: 0.25rem;
@@ -69,19 +70,19 @@
 
     /* ── Tier 2: Semantic tokens ─────────────────────────────────── */
 
-    --color-brand:         light-dark(var(--color-blue-40), var(--color-blue-30));
-    --color-brand-dark:    light-dark(var(--color-blue-50), var(--color-blue-20));
-    --color-brand-light:   light-dark(var(--color-blue-10), var(--color-blue-50));
-    --color-accent:        light-dark(var(--color-gold-40), var(--color-gold-30));
-    --color-accent-light:  light-dark(var(--color-gold-10), oklch(25% 0.04 82));
-    --color-text:          light-dark(var(--color-neutral-20), var(--color-neutral-90));
-    --color-text-subtle:   light-dark(var(--color-neutral-40), var(--color-neutral-80));
-    --color-surface:       light-dark(var(--color-neutral-100), var(--color-neutral-10));
-    --color-surface-alt:   light-dark(var(--color-neutral-95), var(--color-neutral-20));
+    --color-brand: light-dark(var(--color-blue-40), var(--color-blue-30));
+    --color-brand-dark: light-dark(var(--color-blue-50), var(--color-blue-20));
+    --color-brand-light: light-dark(var(--color-blue-10), var(--color-blue-50));
+    --color-accent: light-dark(var(--color-gold-40), var(--color-gold-30));
+    --color-accent-light: light-dark(var(--color-gold-10), oklch(25% 0.04 82));
+    --color-text: light-dark(var(--color-neutral-20), var(--color-neutral-90));
+    --color-text-subtle: light-dark(var(--color-neutral-40), var(--color-neutral-80));
+    --color-surface: light-dark(var(--color-neutral-100), var(--color-neutral-10));
+    --color-surface-alt: light-dark(var(--color-neutral-95), var(--color-neutral-20));
     --color-surface-brand: light-dark(var(--color-blue-50), var(--color-blue-20));
-    --color-border:        light-dark(var(--color-neutral-80), var(--color-neutral-40));
+    --color-border: light-dark(var(--color-neutral-80), var(--color-neutral-40));
     --color-border-subtle: light-dark(var(--color-neutral-90), var(--color-neutral-40));
-    --color-focus:         var(--color-brand);
+    --color-focus: var(--color-brand);
 
     /* ── Tier 3: Component tokens ────────────────────────────────── */
 
@@ -91,7 +92,7 @@
     --header-bg: var(--color-surface);
     --header-border: var(--color-border-subtle);
     --link-color: var(--color-brand);
-    --link-hover-color: color-mix(in oklch, var(--color-brand), oklch(0% 0 0) 20%);
+    --link-hover-color: color-mix(in oklch, var(--color-text), oklch(0% 0 0) 20%);
     --credential-bg: var(--color-brand-light);
     --credential-text: var(--color-brand-dark);
 
@@ -107,6 +108,7 @@
    ========================================================================== */
 
 @layer base {
+
   /* ── Box-sizing reset ──────────────────────────────────────────── */
   *,
   *::before,
@@ -126,7 +128,10 @@
   }
 
   /* ── Headings ──────────────────────────────────────────────────── */
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-heading);
     font-weight: 700;
     font-optical-sizing: auto;
@@ -136,9 +141,17 @@
     font-variation-settings: "wdth" 50;
   }
 
-  h1 { font-size: clamp(1.75rem, 1rem + 3vw, 3rem); }
-  h2 { font-size: clamp(1.375rem, 1rem + 2vw, 2rem); }
-  h3 { font-size: clamp(1.125rem, 1rem + 0.75vw, 1.375rem); }
+  h1 {
+    font-size: clamp(1.75rem, 1rem + 3vw, 3rem);
+  }
+
+  h2 {
+    font-size: clamp(1.375rem, 1rem + 2vw, 2rem);
+  }
+
+  h3 {
+    font-size: clamp(1.125rem, 1rem + 0.75vw, 1.375rem);
+  }
 
   /* ── Paragraphs ────────────────────────────────────────────────── */
   p {
@@ -166,12 +179,13 @@
   }
 
   /* ── Lists ─────────────────────────────────────────────────────── */
-  ul, ol {
+  ul,
+  ol {
     padding-inline-start: 1.25em;
     margin-block: 0 1em;
   }
 
-  li + li {
+  li+li {
     margin-block-start: 0.35em;
   }
 
@@ -231,7 +245,6 @@
   /* ── Site header ───────────────────────────────────────────────── */
   .site-header {
     background: var(--header-bg);
-    border-block-end: 1px solid var(--header-border);
     padding-block: var(--space-3);
     padding-inline: var(--space-5);
     position: sticky;
@@ -271,12 +284,8 @@
     }
   }
 
-  .site-header__brand:hover {
-    color: var(--color-brand-dark);
-  }
-
   .site-nav {
-    flex-grow: 1; 
+    flex-grow: 1;
     display: flex;
     justify-content: end;
 
@@ -344,28 +353,40 @@
 
   /* ── Hero section ──────────────────────────────────────────────── */
   .hero {
+    position: relative;
+    isolation: isolate;
+    /* contain blend mode to this element */
+    view-timeline: --hero;
     background-color: var(--color-blue-50);
     background-image:
-      /* url("/images/hero_bg.svg"), */
-      linear-gradient(
-        to bottom right,
+      linear-gradient(to bottom right,
         oklch(from var(--color-blue-50) calc(l + .1) calc(c + .04) calc(h - 40)),
-        var(--color-blue-50)
-      );
-    background-position:
-      /* bottom, */
-      0 0;
-    background-size:
-      /* 120% 100%, */
-      100% 100%;
-    background-repeat: no-repeat;
+        var(--color-blue-50));
     color: oklch(95% 0 0);
-    padding-block: var(--space-6);
+    padding-block: var(--space-10);
     padding-inline: var(--space-5);
-    border-block-end: 1px solid var(--color-border-subtle);
+  }
+
+  /* Mountain photo — blends its luminosity (texture) into the gradient's hue */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    /* Fallback for browsers that don't support image-set() */
+    background-image: url("/images/mountain_1000.jpg");
+    background-image: image-set(url("/images/mountain_1000.jpg") type("image/jpeg") 1x,
+        url("/images/mountain_1300.jpg") type("image/jpeg") 2x);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    mix-blend-mode: luminosity;
+    opacity: 0.3;
   }
 
   .hero__inner {
+    position: relative;
+    z-index: 1;
     max-inline-size: 780px;
     margin-inline: auto;
     display: flex;
@@ -376,47 +397,72 @@
   }
 
   .hero__headline {
-    font-size: clamp(1.25rem, 1.25rem + 3.5vw, 2rem);
+    font-size: clamp(1.25rem, 3rem + 3.5vw, 4rem);
     line-height: 1.2;
     color: oklch(95% 0 0);
     text-wrap: balance;
     margin: 0;
+    font-family: var(--font-hero);
+    font-weight: 400;
   }
 
-  .hero__headline em,
-  .hero__headline i {
-    font-style: italic;
-    color: var(--color-accent);
+  .hero__headline em {
+    font-weight: 700;
   }
 
-  .hero__bio {
+  /* ── Expectation section ───────────────────────────────────────────────────── */
+
+  .expectation {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-areas: "bio" "text";
+
+    @media (width > 700px) {
+      grid-template-columns: minmax(0, 1fr) 2fr;
+      grid-template-areas: "bio text";
+    }
+
+    p {
+      grid-area: text;
+    }
+  }
+
+  .expectation__bio {
+
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: var(--space-5);
     text-align: start;
+    align-items: center;
   }
 
-  .hero__image {
+  .expectation__image {
     flex-shrink: 0;
   }
 
-  .hero__image img {
+  .expectation__image img {
     border-radius: 50%;
     inline-size: 130px;
     block-size: 130px;
     object-fit: cover;
   }
 
-  .hero__credentials {
+  .expectation__credentials {
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
+    line-height: 1.3;
   }
 
-  .hero__name {
+  .credential-badge {
+    color: var(--color-text-subtle);
+    margin-block-start: var(--space-1);
+    font-size: 0.8125rem;
+  }
+
+  .expectation__name {
     font-size: 1.125rem;
     font-weight: 500;
-    color: oklch(90% 0 0);
     margin: 0;
   }
 
@@ -460,7 +506,8 @@
       font-size: 1.25rem;
     }
   }
-/* 
+
+  /* 
   .results-list li::before {
     content: "•";
     margin-inline-end: var(--space-3);
@@ -510,14 +557,69 @@
 
   /* ── Testimonials ──────────────────────────────────────────────── */
   .testimonials-section {
+    position: relative;
+    isolation: isolate;
+    view-timeline: --testimonials;
     background-color: var(--color-blue-50);
-    background-image: linear-gradient(
-        to bottom right,
+    background-image: linear-gradient(to bottom right,
         oklch(from var(--color-blue-50) calc(l + .1) calc(c + .04) calc(h - 40)),
-        var(--color-blue-50)
-      );
+        var(--color-blue-50));
     color: oklch(95% 0 0);
     padding-block: var(--space-8);
+  }
+
+  /* Mountain photo background — same treatment as hero */
+  .testimonials-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: url("/images/mountain_1000.jpg");
+    background-image: image-set(url("/images/mountain_1000.jpg") type("image/jpeg") 1x,
+        url("/images/mountain_1300.jpg") type("image/jpeg") 2x);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    mix-blend-mode: luminosity;
+    opacity: 0.4;
+  }
+
+  .testimonials-section .page-wrapper {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Scroll-driven parallax ──────────────────────────────────── */
+  @keyframes parallax {
+    from {
+      background-position: center 30%;
+    }
+
+    to {
+      background-position: center 70%;
+    }
+  }
+
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    .hero::before {
+      animation: parallax linear both;
+      animation-timeline: --hero;
+      animation-range: entry 0% exit 100%;
+    }
+
+    .testimonials-section::before {
+      animation: parallax linear both;
+      animation-timeline: --testimonials;
+      animation-range: entry 0% exit 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .hero::before,
+    .testimonials-section::before {
+      animation: none;
+    }
   }
 
   .testimonials-section .section-heading {
@@ -553,7 +655,7 @@
     font-style: normal;
     font-family: var(--font-heading);
   }
-  
+
   .testimonial__text::after {
     content: "\201D";
     font-size: 1.75rem;
@@ -570,6 +672,7 @@
     grid-template-columns: 1fr;
     gap: var(--space-7);
     justify-items: center;
+
     p {
       margin: 0;
     }
@@ -578,12 +681,14 @@
   @media (width > 700px) {
     .about-layout {
       display: block;
+
       img {
         float: left;
         margin-inline-end: var(--space-6);
         margin-block-end: var(--space-6);
       }
-      p + p {
+
+      p+p {
         margin-block-start: var(--space-6);
       }
     }
@@ -614,38 +719,6 @@
   .page-header__title {
     margin: 0;
   }
-
-  /* ── Credential badge ──────────────────────────────────────────── */
-  .credential-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    background: transparent;
-    color: var(--color-text-subtle);
-    font-size: 0.8125rem;
-    font-weight: 400;
-    padding: var(--space-1) 0;
-    border-radius: 0;
-    border: none;
-  }
-
-  .hero .credential-badge {
-    color: oklch(80% 0 0);
-  }
-
-  /* ── Inline icon link ──────────────────────────────────────────── */
-  .icon-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-weight: 600;
-  }
-
-  .icon-link svg {
-    inline-size: 1.25rem;
-    block-size: 1.25rem;
-    flex-shrink: 0;
-  }
 }
 
 
@@ -666,7 +739,7 @@
     white-space: nowrap !important;
   }
 
-  .flow > * + * {
+  .flow>*+* {
     margin-block-start: var(--space-5);
   }
 
